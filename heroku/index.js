@@ -51,22 +51,8 @@ app.post('/facebook', function(req, res) {
   // Process the Facebook updates here
   received_updates.unshift(req.body);
   call = 'https://app.leadconnect.cc/rest/v1/ext/add_call_api/?widget_key=b28e890c0ed858481130b297705dce6c&api_key=d56d22a8477faadd1ddbf7ce972a45619c4c5bc5&lc_number=+79835495859&country=RU'
-  https.get(call, (resp) => {
-  let data = '';
-
-  // A chunk of data has been recieved.
-  resp.on('data', (chunk) => {
-    data += chunk;
-  });
-
-  // The whole response has been received. Print out the result.
-  resp.on('end', () => {
-    console.log(JSON.parse(data).explanation);
-  });
-
-}).on("error", (err) => {
-  console.log("Error: " + err.message);
-});
+  
+  https.get(call);
   
     
   res.sendStatus(200);
