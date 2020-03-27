@@ -10,7 +10,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
 var xhub = require('express-x-hub');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const https = require('https');
 
 app.set('port', (process.env.PORT || 5000));
 app.listen(app.get('port'));
@@ -51,10 +51,23 @@ app.post('/facebook', function(req, res) {
   // Process the Facebook updates here
   received_updates.unshift(req.body);
   call = 'https://app.leadconnect.cc/rest/v1/ext/add_call_api/?widget_key=b28e890c0ed858481130b297705dce6c&api_key=d56d22a8477faadd1ddbf7ce972a45619c4c5bc5&lc_number=+79835495859&country=RU'
-  xhr = new XMLHttpRequest();
-  xhr.open('get', call, false);
-  xhr.send();
-  console.log(xhr.responseText);
+  https.get(call, (resp) => {
+  let data = '';
+
+  // A chunk of data has been recieved.
+  resp.on('data', (chunk) => {
+    data += chunk;
+  });
+
+  // The whole response has been received. Print out the result.
+  resp.on('end', () => {
+    console.log(JSON.parse(data).explanation);
+  });
+
+}).on("error", (err) => {
+  console.log("Error: " + err.message);
+});
+  
     
   res.sendStatus(200);
 });
