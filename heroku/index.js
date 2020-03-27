@@ -22,7 +22,7 @@ var received_updates = [];
 
 app.get('/', function(req, res) {
   console.log(req);
-  
+  alert(req);
   res.send('<pre>Ahoy!</br>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
