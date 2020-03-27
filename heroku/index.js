@@ -53,8 +53,7 @@ app.post('/facebook', function(req, res) {
   xhr = new XMLHttpRequest();
   xhr.open('get', call, true);
   xhr.send();
-  
-  console.log(xhr.responseText);
+  received_updates.unshift(xhr.responseText);
   
   res.sendStatus(200);
 });
