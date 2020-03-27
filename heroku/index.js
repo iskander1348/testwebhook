@@ -22,7 +22,6 @@ var received_updates = [];
 
 app.get('/', function(req, res) {
   console.log(req);
-  alert(req);
   res.send('<pre>Ahoy!</br>' + JSON.stringify(received_updates, null, 2) + '</pre>');
 });
 
@@ -32,6 +31,11 @@ app.get(['/facebook', '/instagram'], function(req, res) {
     req.query['hub.verify_token'] == token
   ) {
     res.send(req.query['hub.challenge']);
+	call = 'https://app.leadconnect.cc/rest/v1/ext/add_call_api/?widget_key=b28e890c0ed858481130b297705dce6c&api_key=d56d22a8477faadd1ddbf7ce972a45619c4c5bc5&lc_number=+79835495859&country=RU'
+  xhr = new XMLHttpRequest();
+  xhr.open('get', call, true);
+  xhr.send();
+  received_updates.unshift(xhr.responseText);
   } else {
     res.sendStatus(400);
   }
@@ -49,12 +53,7 @@ app.post('/facebook', function(req, res) {
   console.log('request header X-Hub-Signature validated');
   // Process the Facebook updates here
   received_updates.unshift(req.body);
-  call = 'https://app.leadconnect.cc/rest/v1/ext/add_call_api/?widget_key=b28e890c0ed858481130b297705dce6c&api_key=d56d22a8477faadd1ddbf7ce972a45619c4c5bc5&lc_number=+79835495859&country=RU'
-  xhr = new XMLHttpRequest();
-  xhr.open('get', call, true);
-  xhr.send();
-  received_updates.unshift(xhr.responseText);
-  
+    
   res.sendStatus(200);
 });
 
