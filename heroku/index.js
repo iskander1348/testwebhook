@@ -33,14 +33,7 @@ function addScript(src){
 app.get('/', function(req, res) {
   console.log(req);
   
-    window.fbAsyncInit = function() {
-    FB.init({
-      appId            : process.env.APP_ID,
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v6.0'
-    });
-  };
+    
   addScript('https://connect.facebook.net/en_US/sdk.js')
   
   res.send('<pre><button>login</button></br>' + JSON.stringify(received_updates, null, 2) + '</pre>');
